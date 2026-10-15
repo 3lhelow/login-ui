@@ -13,6 +13,8 @@ class LoginPage extends StatelessWidget {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -38,20 +40,28 @@ class LoginPage extends StatelessWidget {
 
                   SizedBox(height: 25),
 
-                  // username text field
-                  MyTextField(
-                    controller: usernameController,
-                    hintText: HintText.username,
-                    obscureText: false,
-                  ),
+                  // text fields wrapped in a single Form
+                  Form(
+                    key: formKey,
+                    child: Column(
+                      children: [
+                        // username text field
+                        MyTextField(
+                          controller: usernameController,
+                          hintText: HintText.username,
+                          obscureText: false,
+                        ),
 
-                  SizedBox(height: 25),
+                        SizedBox(height: 25),
 
-                  // password text field
-                  MyTextField(
-                    controller: passwordController,
-                    hintText: HintText.password,
-                    obscureText: true,
+                        // password text field
+                        MyTextField(
+                          controller: passwordController,
+                          hintText: HintText.password,
+                          obscureText: true,
+                        ),
+                      ],
+                    ),
                   ),
 
                   SizedBox(height: 25),
@@ -132,16 +142,18 @@ class LoginPage extends StatelessWidget {
   }
 
   void signIn() {
-    print("username: ${usernameController.text}");
-    print("password: ${passwordController.text}");
+    if (formKey.currentState!.validate()) {
+      debugPrint("username: ${usernameController.text}");
+      debugPrint("password: ${passwordController.text}");
+    }
   }
 
   void signInWithGoogle() {
-    print("signInWithGoogle");
+    debugPrint("signInWithGoogle");
   }
 
   void signInWithApple() {
-    print("signInWithApple");
+    debugPrint("signInWithApple");
   }
 
   Widget continueWith() {

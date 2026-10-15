@@ -12,14 +12,9 @@ Login UI is a mobile user interface template designed for authentication flows. 
 
 ## Features
 
-- Custom Username and Password text fields with clean styling
+- Custom Username and Password text fields with form validation support
 - Password visibility toggle (show/hide password)
 - Primary action button for user authentication
 - Social login options supporting Google and Apple icons
 - Options for password recovery and account registration
 - Responsive scrollable layout optimized for mobile screens
-
-## Built With
-
-- Flutter
-- Dart

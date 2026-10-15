@@ -4,12 +4,14 @@ class MyTextField extends StatefulWidget {
   final TextEditingController controller;
   final HintText hintText;
   final bool obscureText;
+  final String? Function(String?)? validator;
 
   const MyTextField({
     super.key,
     required this.controller,
     required this.hintText,
     required this.obscureText,
+    this.validator,
   });
 
   @override
@@ -31,9 +33,17 @@ class _TextFieldState extends State<MyTextField> {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25),
-      child: TextField(
+      child: TextFormField(
         controller: widget.controller,
         obscureText: isPassword ? _isObscured : false,
+
+        validator: widget.validator ??
+            (String? value) {
+              if (value == null || value.isEmpty) {
+                return "${widget.hintText.name} is required";
+              }
+              return null;
+            },
 
         decoration: InputDecoration(
           hintText: widget.hintText.name,
@@ -52,7 +62,7 @@ class _TextFieldState extends State<MyTextField> {
                 )
               : null,
 
-          enabledBorder: OutlineInputBorder(
+          enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.white),
           ),
 
@@ -65,19 +75,6 @@ class _TextFieldState extends State<MyTextField> {
         ),
       ),
     );
-  }
-
-  Widget showPassword() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [Icon(Icons.remove_red_eye)],
-    );
-  }
-
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    throw UnimplementedError();
   }
 }
 
